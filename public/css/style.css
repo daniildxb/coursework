@@ -4,6 +4,22 @@
 	box-sizing: border-box;
 }
 
+.back-button {
+	width: 200px;
+	height: 54px;
+	line-height: 54px;
+	background-color: #53ac74;
+	font-family: Arial;
+	color: #fff;
+	display: block;
+	position: absolute;
+	text-decoration: none;
+	top: 50px;
+	left: 50px;
+	border-top-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
 .initial {
 	width: 100vw;
 	height: 100vh;
@@ -45,12 +61,13 @@
 	color: #fff;
 	text-decoration: none;
 	display: block;
-	border-radius: 5px;
 	cursor: pointer;
 	height: 48px;
 	line-height: 48px;
 	text-align: center;
 	font-size: 14px;
+	border-top-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 }
 
 .block-body {
