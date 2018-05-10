@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Kursa4</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="block-body">
+	<div class="wrapper">
+		<h1>Задача формирования транзакции</h1>
+		<label for="size">Введите размер транзакции в байтах и размер комиссии (через запятую)</label>
+		<input type="text" name="size" placeholder="1234, 28">
+		<label for="file">Загрузите файл со входами транзакции</label>
+		<input type="file" name="file" id="file">
+		<textarea name="data" disabled></textarea>
+		<div class="or">ИЛИ</div>
+		<div class="button button-generate">Сгенерировать случайные данные</div>
+		<div class="divider"></div>
+		<div class="button button-solve">Решить</div>
+		<h2>Результат: </h2>
+		<textarea name="result" disabled></textarea>
+		<div class="button button-download">Скачать</div>
+	</div>
+</body>
+</html>
