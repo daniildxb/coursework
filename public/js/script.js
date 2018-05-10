@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    let transactions;
     $('.generate-transactions').click(function() {
 
         let data = $('input[name="size"]').val();
@@ -21,6 +22,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 console.log(data);
+                transactions = data.transactions;
                 let text = '';
                 for (let i = 0; i < data.transactions.length; i++) {
                     text += `{${data.transactions[i]['length']}, ${data.transactions[i]['fee']}}\n`;
@@ -69,4 +71,33 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('.solve-block').click(function() {
+        console.log(transactions);
+        let data = $('input[name="size"]').val();
+        data = data.split(',');
+        if (data.length != 2) {
+            alert('Некорректные входные данные');
+            return;
+        }
+
+        let blockSize = data[0];
+        $.ajax({
+            method: 'post',
+            url: 'http://localhost:3000/block',
+            dataType: 'json',
+            data: {
+                transactions: transactions,
+                blockSize: blockSize
+            },
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(err) {
+                console.log(err);
+                alert('Ошибка');
+            }
+        });
+    });
+
 });
