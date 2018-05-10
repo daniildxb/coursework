@@ -125,6 +125,10 @@ textarea {
 	resize: none;
 }
 
+#data {
+	cursor: pointer;
+}
+
 .or {
 	font-family: Arial;
 	font-size: 24px;
@@ -148,6 +152,12 @@ textarea {
 .button-download {
 	width: 200px;
 	margin: 0 auto;
+}
+
+.button-download-data {
+	width: 200px;
+	margin: 0 auto;
+	margin-bottom: 20px;
 }
 
 h2 {

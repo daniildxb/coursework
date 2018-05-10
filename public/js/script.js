@@ -21,7 +21,6 @@ $(document).ready(function() {
                 txNum: txNum
             },
             success: function(data) {
-                console.log(data);
                 transactions = data.transactions;
                 let text = '';
                 for (let i = 0; i < data.transactions.length; i++) {
@@ -58,7 +57,6 @@ $(document).ready(function() {
                 txOutNum: outputs
             },
             success: function(data) {
-                console.log(data);
                 let text = '';
                 for (let i = 0; i < data.txOut.length; i++) {
                     text += `{${data.txOut[i]['amount']}, ${data.txOut[i]['length']}}\n`;
@@ -73,7 +71,6 @@ $(document).ready(function() {
     });
 
     $('.solve-block').click(function() {
-        console.log(transactions);
         let data = $('input[name="size"]').val();
         data = data.split(',');
         if (data.length != 2) {
@@ -92,6 +89,18 @@ $(document).ready(function() {
             },
             success: function(data) {
                 console.log(data);
+                data = data['result'][0];
+                let text = '';
+                let summ = 0;
+                let size = 0;
+                for (let i = 0; i < data.length; i++) {
+                    text += `{${data[i]['length']}, ${data[i]['fee']}}\n`;
+                    summ += +data[i]['fee'];
+                    size += +data[i]['length'];
+                }
+                summs = 'Суммарный размер блока: ' + size + '\n' + 'Суммарная комиссия: ' + summ + '\n\n\n';
+                text = summs + text;
+                $('textarea#result').html(text);
             },
             error: function(err) {
                 console.log(err);
@@ -99,5 +108,35 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('.button-download').click(function() {
+        if ($('textarea#result').val() != '') {
+            download($('textarea#result').val(), 'results', 'txt');
+        }
+    });
+
+    $('textarea#data').click(function() {
+        if ($('textarea#data').val() != '') {
+            download($('textarea#data').val(), 'transactions', 'txt');
+        }
+    });
+
+    function download(data, filename, type) {
+    var file = new Blob([data], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
+}
 
 });
