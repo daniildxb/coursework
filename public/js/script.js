@@ -21,6 +21,12 @@ $(document).ready(function() {
             },
             success: function(data) {
                 console.log(data);
+                let text = '';
+                for (let i = 0; i < data.transactions.length; i++) {
+                    text += `{${data.transactions[i]['length']}, ${data.transactions[i]['fee']}}\n`;
+                }
+                $('textarea').html(text);
+
             },
             error: function(err) {
                 console.log(err);
@@ -51,6 +57,11 @@ $(document).ready(function() {
             },
             success: function(data) {
                 console.log(data);
+                let text = '';
+                for (let i = 0; i < data.txOut.length; i++) {
+                    text += `{${data.txOut[i]['amount']}, ${data.txOut[i]['length']}}\n`;
+                }
+                $('textarea').html(text);
             },
             error: function(err) {
                 console.log(err);
