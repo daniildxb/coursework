@@ -2,24 +2,29 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Kursa4</title>
+	<title>Coursework</title>
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body class="block-body">
 	<div class="wrapper">
 		<h1>Задача формирования блока</h1>
-		<label for="size">Введите размер блока в байтах</label>
-		<input type="text" name="size" placeholder="1234">
+		<label for="size">Введите размер блока в байтах и количество транзакций</label>
+		<input type="text" name="size" placeholder="1024, 229">
 		<label for="file">Загрузите файл с транзакциями</label>
 		<input type="file" name="file" id="file">
 		<textarea name="data" disabled></textarea>
 		<div class="or">ИЛИ</div>
-		<div class="button button-generate">Сгенерировать случайные данные</div>
+		<div class="button button-generate generate-transactions">Сгенерировать случайные данные</div>
 		<div class="divider"></div>
 		<div class="button button-solve">Решить</div>
 		<h2>Результат: </h2>
 		<textarea name="result" disabled></textarea>
 		<div class="button button-download">Скачать</div>
 	</div>
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
