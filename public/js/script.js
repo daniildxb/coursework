@@ -88,15 +88,19 @@ $(document).ready(function() {
                 blockSize: blockSize
             },
             success: function(data) {
-                console.log(data);
-                data = data['result'][0];
-                let text = '';
+                let bounds = data['result'][1]['bounds'];
+                let text = 'Результат методу гілок та границь:\n';
                 let summ = 0;
                 let size = 0;
-                for (let i = 0; i < data.length; i++) {
-                    text += `{${data[i]['length']}, ${data[i]['fee']}}\n`;
-                    summ += +data[i]['fee'];
-                    size += +data[i]['length'];
+                for (let i = 0; i < bounds.length; i++) {
+                    text += `{${bounds[i]['length']}, ${bounds[i]['fee']}}\n`;
+                    summ += +bounds[i]['fee'];
+                    size += +bounds[i]['length'];
+                }
+                let numeric = data['result'][0]['numeric'];
+                text += '\nРезультат методу повного перебору:\n';
+                for (let i = 0; i < numeric.length; i++) {
+                    text += `{${numeric[i]['length']}, ${numeric[i]['fee']}}\n`;
                 }
                 summs = 'Суммарный размер блока: ' + size + '\n' + 'Суммарная комиссия: ' + summ + '\n\n\n';
                 text = summs + text;
@@ -122,21 +126,21 @@ $(document).ready(function() {
     });
 
     function download(data, filename, type) {
-    var file = new Blob([data], {type: type});
-    if (window.navigator.msSaveOrOpenBlob) // IE10+
-        window.navigator.msSaveOrOpenBlob(file, filename);
-    else { // Others
-        var a = document.createElement("a"),
+        var file = new Blob([data], {type: type});
+        if (window.navigator.msSaveOrOpenBlob) // IE10+
+            window.navigator.msSaveOrOpenBlob(file, filename);
+        else { // Others
+            var a = document.createElement('a'),
                 url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function() {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);  
-        }, 0); 
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);  
+            }, 0); 
+        }
     }
-}
 
 });
