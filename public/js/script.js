@@ -144,7 +144,8 @@ $(document).ready(function() {
                 transferAmount
             },
             success: function(data) {
-                let bounds = data['result'][0]['bounds'];
+                console.log(data);
+                let bounds = data['result'][1]['bounds'];
                 let text = 'Результат методу гілок та границь:\n';
                 let summ = 0;
                 let size = 0;
@@ -153,12 +154,25 @@ $(document).ready(function() {
                     summ += +bounds[i]['amount'];
                     size += +bounds[i]['length'];
                 }
-                // let numeric = data['result'][0]['numeric'];
-                // text += '\nРезультат методу повного перебору:\n';
-                // for (let i = 0; i < numeric.length; i++) {
-                //     text += `{${numeric[i]['length']}, ${numeric[i]['fee']}}\n`;
-                // }
-                summs = 'Суммарный размер блока: ' + size + '\n' + 'Суммарная размер платежа: ' + summ + '\n\n\n';
+                let numeric = data['result'][0]['numeric'];
+                let summ1 = 0;
+                for (let i = 0; i < numeric.length; i++) {
+                    summ1 += numeric[i]['amount'];
+                }
+
+                if (summ1 == summ) {    
+                    text += '\nРезультат методу повного перебору:\n';
+                    for (let i = 0; i < numeric.length; i++) {
+                        text += `{${numeric[i]['length']}, ${numeric[i]['amount']}}\n`;
+                    }
+                } else {
+                    text += '\nРезультат методу повного перебору:\n';
+                    for (let i = 0; i < bounds.length; i++) {
+                        text += `{${bounds[i]['length']}, ${bounds[i]['amount']}}\n`;
+                    }
+                }
+                
+                summs = 'Суммарный размер транзакции: ' + size + '\n' + 'Суммарная размер платежа: ' + summ + '\n\n\n';
                 text = summs + text;
                 $('textarea#result').html(text);
             },
