@@ -142,7 +142,7 @@ $(document).ready(function() {
                 let summ = 0;
                 let size = 0;
                 for (let i = 0; i < bounds.length; i++) {
-                    text += `{${bounds[i]['length']}, ${bounds[i]['amount']}}\n`;
+                    text += `{${bounds[i]['amount']}, ${bounds[i]['length']}}\n`;
                     summ += +bounds[i]['amount'];
                     size += +bounds[i]['length'];
                 }
@@ -151,7 +151,7 @@ $(document).ready(function() {
 
                 text += '\nРезультат методу повного перебору:\n';
                 for (let i = 0; i < numeric.length; i++) {
-                    text += `{${numeric[i]['length']}, ${numeric[i]['amount']}}\n`;
+                    text += `{${numeric[i]['amount']}, ${numeric[i]['length']}}\n`;
                 }
 
                 
