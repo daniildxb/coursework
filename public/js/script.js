@@ -213,4 +213,47 @@ $(document).ready(function() {
         }
     }
 
+    $('#fileblock').on('change', function() {
+        let data = new FormData();
+        data.append('file', $('#fileblock')[0].files[0]);
+        console.log(data.get('file'));
+        $.ajax({
+            method: 'post',
+            url: 'http://localhost:3000/uploadBlock',
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                transactions = data.transactions;
+                let text = '';
+                for (let i = 0; i < data.transactions.length; i++) {
+                    text += `{${data.transactions[i]['length']}, ${data.transactions[i]['fee']}}\n`;
+                }
+                $('textarea#data').html(text);
+            }
+        });
+    });
+
+    $('#filetx').on('change', function() {
+        let data = new FormData();
+        data.append('file', $('#filetx')[0].files[0]);
+        console.log(data.get('file'));
+        $.ajax({
+            method: 'post',
+            url: 'http://localhost:3000/uploadTx',
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                txInputs = data.txIn;
+                console.log(txInputs);
+                let text = '';
+                for (let i = 0; i < data.txIn.length; i++) {
+                    text += `{${data.txIn[i]['amount']}, ${data.txIn[i]['length']}}\n`;
+                }
+                $('textarea#data').html(text);            }
+        });
+    });
+
+
 });
