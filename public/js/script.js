@@ -1,5 +1,6 @@
 $(document).ready(function() {
     let transactions;
+    let txInputs;
     $('.generate-transactions').click(function() {
 
         let data = $('input[name="size"]').val();
@@ -46,7 +47,7 @@ $(document).ready(function() {
         }
 
         let amount = data[0];
-        let outputs = data[1];
+        let inputs = data[1];
 
         $.ajax({
             method: 'post',
@@ -54,12 +55,13 @@ $(document).ready(function() {
             dataType: 'json',
             data: {
                 transferAmount: amount,
-                txOutNum: outputs
+                txInNum: inputs
             },
             success: function(data) {
+                txInputs = data.txIn;
                 let text = '';
-                for (let i = 0; i < data.txOut.length; i++) {
-                    text += `{${data.txOut[i]['amount']}, ${data.txOut[i]['length']}}\n`;
+                for (let i = 0; i < data.txIn.length; i++) {
+                    text += `{${data.txIn[i]['amount']}, ${data.txIn[i]['length']}}\n`;
                 }
                 $('textarea#data').html(text);
             },
@@ -114,6 +116,49 @@ $(document).ready(function() {
                     }
                 }
                 summs = 'Суммарный размер блока: ' + size + '\n' + 'Суммарная комиссия: ' + summ + '\n\n\n';
+                text = summs + text;
+                $('textarea#result').html(text);
+            },
+            error: function(err) {
+                console.log(err);
+                alert('Ошибка');
+            }
+        });
+    });
+
+    $('.solve-tx').click(function() {
+        let data = $('input[name="size"]').val();
+        data = data.split(',');
+        if (data.length != 2) {
+            alert('Некорректные входные данные');
+            return;
+        }
+
+        let transferAmount = data[0];
+        $.ajax({
+            method: 'post',
+            url: 'http://localhost:3000/tx',
+            dataType: 'json',
+            data: {
+                txInputs,
+                transferAmount
+            },
+            success: function(data) {
+                let bounds = data['result'][0]['bounds'];
+                let text = 'Результат методу гілок та границь:\n';
+                let summ = 0;
+                let size = 0;
+                for (let i = 0; i < bounds.length; i++) {
+                    text += `{${bounds[i]['length']}, ${bounds[i]['amount']}}\n`;
+                    summ += +bounds[i]['amount'];
+                    size += +bounds[i]['length'];
+                }
+                // let numeric = data['result'][0]['numeric'];
+                // text += '\nРезультат методу повного перебору:\n';
+                // for (let i = 0; i < numeric.length; i++) {
+                //     text += `{${numeric[i]['length']}, ${numeric[i]['fee']}}\n`;
+                // }
+                summs = 'Суммарный размер блока: ' + size + '\n' + 'Суммарная размер платежа: ' + summ + '\n\n\n';
                 text = summs + text;
                 $('textarea#result').html(text);
             },
