@@ -94,27 +94,19 @@ $(document).ready(function() {
                 let numeric = data['result'][0]['numeric'];
                 let text = 'Результат методу гілок та границь:\n';
                 let summ = 0;
-                let summ2 = 0;
                 let size = 0;
                 for (let i = 0; i < bounds.length; i++) {
                     text += `{${bounds[i]['length']}, ${bounds[i]['fee']}}\n`;
                     summ += +bounds[i]['fee'];
                     size += +bounds[i]['length'];
                 }
-                for (let i = 0; i < numeric.length; i++) {
-                    summ2 += +numeric[i]['fee'];
-                }
+
                 text += '\nРезультат методу повного перебору:\n';
                 
-                if (summ == summ2) {
-                    for (let i = 0; i < numeric.length; i++) {
-                        text += `{${numeric[i]['length']}, ${numeric[i]['fee']}}\n`;
-                    }
-                } else {
-                    for (let i = 0; i < bounds.length; i++) {
-                        text += `{${bounds[i]['length']}, ${bounds[i]['fee']}}\n`;
-                    }
+                for (let i = 0; i < numeric.length; i++) {
+                    text += `{${numeric[i]['length']}, ${numeric[i]['fee']}}\n`;
                 }
+                
                 summs = 'Суммарный размер блока: ' + size + '\n' + 'Суммарная комиссия: ' + summ + '\n\n\n';
                 text = summs + text;
                 $('textarea#result').html(text);
@@ -155,22 +147,13 @@ $(document).ready(function() {
                     size += +bounds[i]['length'];
                 }
                 let numeric = data['result'][0]['numeric'];
-                let summ1 = 0;
+
+
+                text += '\nРезультат методу повного перебору:\n';
                 for (let i = 0; i < numeric.length; i++) {
-                    summ1 += numeric[i]['amount'];
+                    text += `{${numeric[i]['length']}, ${numeric[i]['amount']}}\n`;
                 }
 
-                if (summ1 == summ) {    
-                    text += '\nРезультат методу повного перебору:\n';
-                    for (let i = 0; i < numeric.length; i++) {
-                        text += `{${numeric[i]['length']}, ${numeric[i]['amount']}}\n`;
-                    }
-                } else {
-                    text += '\nРезультат методу повного перебору:\n';
-                    for (let i = 0; i < bounds.length; i++) {
-                        text += `{${bounds[i]['length']}, ${bounds[i]['amount']}}\n`;
-                    }
-                }
                 
                 summs = 'Суммарный размер транзакции: ' + size + '\n' + 'Суммарная размер платежа: ' + summ + '\n\n\n';
                 text = summs + text;
