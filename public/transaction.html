@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Coursewrok</title>
+	<title>Coursework</title>
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/chartist.min.css">
 </head>
 <body class="block-body">
 	<div class="wrapper">
@@ -21,11 +22,27 @@
 		<h2>Результат: </h2>
 		<textarea name="result" id="result" disabled></textarea>
 		<div class="button button-download">Скачать</div>
+		<div class="graph">
+			<div class="ct-chart"></div>
+			<div class="legend">
+				<div class="numeric">
+					<div></div> Метод полного перебора
+				</div>
+				<div class="bounds">
+					<div></div> Метод ветвей и сечений
+				</div>
+				<div class="greedy">
+					<div></div> Жадный алгоритм
+				</div>
+			</div>
+		</div>
+		
 	</div>
 	<script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
+	src="https://code.jquery.com/jquery-3.3.1.js"
+	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	crossorigin="anonymous"></script>
+	<script src="js/chartist.min.js"></script>
+	<script src="js/script.js"></script>
 </body>
 </html>

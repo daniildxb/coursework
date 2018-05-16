@@ -90,8 +90,12 @@ $(document).ready(function() {
                 blockSize: blockSize
             },
             success: function(data) {
-                let bounds = data['result'][1]['bounds'];
-                let numeric = data['result'][0]['numeric'];
+                let bounds = data['result'][1]['data']['bounds'];
+                let numeric = data['result'][0]['data']['numerical'];
+                let greedy = data['result'][2]['data']['greedy'];
+                let boundsTime = data['result'][1]['data']['time'];
+                let numericTime = data['result'][0]['data']['time'];
+                let greedyTime = data['result'][2]['data']['time'];
                 let text = 'Результат методу гілок та границь:\n';
                 let summ = 0;
                 let size = 0;
@@ -100,16 +104,32 @@ $(document).ready(function() {
                     summ += +bounds[i]['fee'];
                     size += +bounds[i]['length'];
                 }
+                text += 'Время работы алгоритма: ' + boundsTime + 'ms\n\n';
 
                 text += '\nРезультат методу повного перебору:\n';
                 
                 for (let i = 0; i < numeric.length; i++) {
                     text += `{${numeric[i]['length']}, ${numeric[i]['fee']}}\n`;
                 }
-                
+                text += 'Время работы алгоритма: ' + numericTime + 'ms\n\n';
+
+                text += '\nРезультат жадного алгоритма:\n';
+                for (let i = 0; i < greedy.length; i++) {
+                    text += `{${greedy[i]['length']}, ${greedy[i]['fee']}}\n`;
+                }
+                text += 'Время работы алгоритма: ' + greedyTime + 'ms\n\n';
+
                 summs = 'Суммарный размер блока: ' + size + '\n' + 'Суммарная комиссия: ' + summ + '\n\n\n';
                 text = summs + text;
                 $('textarea#result').html(text);
+
+                var data = {
+                  labels: [numericTime + 'ms', boundsTime + 'ms', greedyTime + 'ms'],
+                  series: [numericTime, boundsTime, greedyTime]
+                };
+
+                new Chartist.Pie('.ct-chart', data);
+                $('.legend').css({'display':'block'});
             },
             error: function(err) {
                 console.log(err);
@@ -137,7 +157,8 @@ $(document).ready(function() {
             },
             success: function(data) {
                 console.log(data);
-                let bounds = data['result'][1]['bounds'];
+                let bounds = data['result'][1]['data']['bounds'];
+                let boundsTime = data['result'][1]['data']['time'];
                 let text = 'Результат методу гілок та границь:\n';
                 let summ = 0;
                 let size = 0;
@@ -146,18 +167,35 @@ $(document).ready(function() {
                     summ += +bounds[i]['amount'];
                     size += +bounds[i]['length'];
                 }
-                let numeric = data['result'][0]['numeric'];
+                text += 'Время работы алгоритма: ' + boundsTime + 'ms\n\n';
 
-
+                let numeric = data['result'][0]['data']['numerical'];
+                let numericTime = data['result'][0]['data']['time'];
                 text += '\nРезультат методу повного перебору:\n';
                 for (let i = 0; i < numeric.length; i++) {
                     text += `{${numeric[i]['amount']}, ${numeric[i]['length']}}\n`;
                 }
+                text += 'Время работы алгоритма: ' + numericTime + 'ms\n\n';
 
-                
+                let greedy = data['result'][2]['data']['greedy'];
+                let greedyTime = data['result'][2]['data']['time'];  
+                text += '\nРезультат жадного алгоритма:\n';
+                for (let i = 0; i < greedy.length; i++) {
+                    text += `{${greedy[i]['amount']}, ${greedy[i]['length']}}\n`;
+                }
+                text += 'Время работы алгоритма: ' + greedyTime + 'ms\n\n';
+
                 summs = 'Суммарный размер транзакции: ' + size + '\n' + 'Суммарная размер платежа: ' + summ + '\n\n\n';
                 text = summs + text;
                 $('textarea#result').html(text);
+
+                var data = {
+                  labels: [numericTime + 'ms', boundsTime + 'ms', greedyTime + 'ms'],
+                  series: [numericTime, boundsTime, greedyTime]
+                };
+
+                new Chartist.Pie('.ct-chart', data);
+                $('.legend').css({'display':'block'});
             },
             error: function(err) {
                 console.log(err);
@@ -234,7 +272,8 @@ $(document).ready(function() {
                 for (let i = 0; i < data.txIn.length; i++) {
                     text += `{${data.txIn[i]['amount']}, ${data.txIn[i]['length']}}\n`;
                 }
-                $('textarea#data').html(text);            }
+                $('textarea#data').html(text);  
+            }
         });
     });
 

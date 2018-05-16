@@ -4,6 +4,11 @@
 	box-sizing: border-box;
 }
 
+.ct-chart {
+	width: 300px;
+	height: 300px;
+}
+
 .back-button {
 	width: 200px;
 	height: 54px;
@@ -18,6 +23,43 @@
 	left: 50px;
 	border-top-left-radius: 10px;
 	border-bottom-right-radius: 10px;
+}
+
+.graph {
+	position: absolute;
+	bottom: 100px;
+	right: 10px;
+}
+
+.legend {
+	font-family: Arial;
+	font-size: 12px;
+	text-align: left;
+	display: none;
+}
+
+.legend .numeric div {
+	position: relative;
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	background-color: #d70206;
+}
+
+.legend .bounds div {
+	position: relative;
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	background-color: #f05b4f;
+}
+
+.legend .greedy div {
+	position: relative;
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	background-color: #f4c63d;
 }
 
 .initial {
