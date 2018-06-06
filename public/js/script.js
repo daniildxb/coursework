@@ -80,11 +80,16 @@ $(document).ready(function() {
             return;
         }
 
-        if (data[1] > 250) {
-            alert('Amount of transactions is too high to be proceeded');
+        if (data[1] > 250 || !Number.isInteger(+data[1])) {
+            alert('Amount of transactions is invalid. Max allowed transactions - 250');
+            return;
         } else {
 
-            let blockSize = data[0];
+            let blockSize = +data[0];
+            if (blockSize <= 0 || !Number.isInteger(blockSize)) {
+                alert('Некорректний розмір блоку');
+                return;
+            }
             $.ajax({
                 method: 'post',
                 url: 'http://localhost:3000/block',
@@ -151,12 +156,17 @@ $(document).ready(function() {
             return;
         }
 
-        if (data[1] > 250) {
-            alert('Amount of transactions is too high to be proceeded');
+        if (data[1] > 250 || !Number.isInteger(+data[1])) {
+            alert('Amount of transaction inputs is invalid. Max allowed inputs - 250');
+            return;
         } else {
 
 
             let transferAmount = data[0];
+            if (transferAmount < 0) {
+                alert('Invalid transfer amount');
+                return;
+            }
             $.ajax({
                 method: 'post',
                 url: 'http://localhost:3000/tx',
